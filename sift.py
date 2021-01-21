@@ -13,10 +13,9 @@ if input_gender != "m" and input_gender != "f" and input_gender != "a":
     print("names between 40% and 60% masculine/feminine are considered androgynous")
     exit()
 
-input_name = sys.argv[3]
+input_name = sys.argv[3] # a name (or whatever, it doesn't actually matter lol)
 
 file = open("./namesdb/yob" + year + ".txt")
-
 csvreader = csv.reader(file, delimiter=',')
 
 names = {}
@@ -39,10 +38,6 @@ for row in csvreader:
 
 file.close()
 
-# for name in names.values():
-#     gender_float = name.get_gender()
-#     print(name.name + ": " + str(gender_float * 100.0) + "% masculine")
-
 siftlist = []
 
 for name in names.values():
@@ -58,8 +53,10 @@ for name in names.values():
 def similarity(name: NameStruct) -> float:
     return name.similarity(input_name)
 
-top_ten = sorted(siftlist, key=similarity, reverse=True)[:100]
+# Change 100 here to how many you want
+# You can switch reverse to False if you want the least similar
+top_n = sorted(siftlist, key=similarity, reverse=True)[:100] 
 
-for name in top_ten:
+for name in top_n:
     gender_float = name.get_gender()
     print(name.name + ": " + str(gender_float * 100.0) + "% masculine")
