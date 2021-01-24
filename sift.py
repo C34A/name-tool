@@ -55,11 +55,11 @@ def similarity(name: NameStruct) -> float:
 
 # Change 100 here to how many you want
 # You can switch reverse to False if you want the least similar
-top_n = sorted(siftlist, key=similarity, reverse=True)[:100] 
+top_n = sorted(siftlist, key=similarity, reverse=False)[:100] 
 
 for name in top_n:
     gender_float = name.get_gender()
     mf = "masculine" if gender_float > 0.5 else "feminine"
     mf_float = "{:.2f}".format((gender_float if gender_float > 0.5 else \
                                 (1.0 - gender_float)) * 100.0)
-    print(name.name + ": " + mf_float + "% " + mf)
+    print(name.name + ": " + mf_float + "% " + mf + " (n=" + str(name.get_n()) + ")")
