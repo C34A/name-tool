@@ -1,9 +1,9 @@
 ## name-tool
-a creatively named tool to suggest  names of a particular gender similar to an input name.
+A creatively named tool to suggest names of a particular gender similar to an input name. Uses data from https://www.ssa.gov/oact/babynames/limits.html
 
 ### dependencies
 
-this tool has the optional dependencies of  [phonetics](https://pypi.org/project/phonetics/) and [python-Levenshtein](https://pypi.org/project/python-Levenshtein/). These can be removed by deleting the erroneous imports and replacing the `NameStruct.similarity()` function with the `NameStruct.old_similarity` function (both in `nameutils.py`). Doing this may or may not produce worse results (both systems do a pretty mediocre job, honestly).
+This tool has the optional dependencies of  [phonetics](https://pypi.org/project/phonetics/) and [python-Levenshtein](https://pypi.org/project/python-Levenshtein/). These can be removed by deleting the erroneous imports and replacing the `NameStruct.similarity()` function with the `NameStruct.old_similarity` function (both in `nameutils.py`). Doing this may or may not produce worse results (both systems do a pretty mediocre job, honestly).
 
 ### usage
 
@@ -13,7 +13,7 @@ on linux you can just do:
 
 on other OSes you probably need to stick `python` or `python3` on the front of that.
 
-[year] specifies a birth year. it is required for now. srry.
+[year] specifies a birth year, between 1880 and 2019. it is required for now. srry.
 
 [gender] specifies a gender, and is 'm', 'f', or 'a'. A name that is >= 60% correllated with a particular sex (the dataset this uses only has 'M' and 'F'...) will be considered that gender for 'm' and 'f', and anything between 40% and 60% will be given for 'a'.
 
