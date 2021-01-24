@@ -24,7 +24,7 @@ class NameStruct:
     def get_n(self) -> int:
         return self.occurrences_fem + self.occurrences_mas
     
-    #doesn't need non-standard dependencies
+    # This one doesn't need non-standard dependencies (and is faster)
     def old_similarity(self, other: str) -> float:
         return SequenceMatcher(None, self.name, other).ratio()
 
