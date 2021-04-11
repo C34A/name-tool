@@ -7,10 +7,10 @@ from nameutils import NameStruct
 
 year = sys.argv[1] # a year, in YYYY format
 input_gender = sys.argv[2].lower()
-if input_gender != "m" and input_gender != "f" and input_gender != "a":
-    print("this tool only uses 'm', 'f', or 'a' for input gender.")
-    print("'m' for masculint, 'f' for feminint, 'a' for androgynous")
-    print("names between 40% and 60% masculine/feminine are considered androgynous")
+if input_gender != "m" and input_gender != "f" and input_gender != "n":
+    print("this tool only uses 'm', 'f', or 'n' for input gender.")
+    print("'m' for masculint, 'f' for feminint, 'n' for gender neutral.")
+    print("names between 40% and 60% masculine/feminine are considered gender neutral")
     exit()
 
 input_name = sys.argv[3] # a name (or whatever, it doesn't actually matter lol)
@@ -43,7 +43,7 @@ siftlist = []
 for name in names.values():
     gen = name.get_gender() 
     # these could be or'd but i don't like long lines :P
-    if input_gender == 'a' and gen > 0.4 and gen < 0.6:
+    if input_gender == 'n' and gen > 0.4 and gen < 0.6:
         siftlist.append(name)
     if input_gender == 'm' and gen > 0.6:
         siftlist.append(name)

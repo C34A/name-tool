@@ -15,7 +15,7 @@ on other OSes you probably need to stick `python` or `python3` on the front of t
 
 [year] specifies a birth year, between 1880 and 2019. it is required for now. srry.
 
-[gender] specifies a gender, and is 'm', 'f', or 'a'. A name that is >= 60% correllated with a particular sex (the dataset this uses only has 'M' and 'F'...) will be considered that gender for 'm' and 'f', and anything between 40% and 60% will be given for 'a'.
+[gender] specifies a gender, and is 'm', 'f', or 'n'. A name that is >= 60% correllated with a particular sex (the dataset this uses only has 'M' and 'F'...) will be considered that gender for 'm' and 'f', and anything between 40% and 60% will be given for 'n'.
 
 [input name] is a name you want the output to be similar to. The output is sorted by similarity to this name.
 
