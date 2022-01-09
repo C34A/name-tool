@@ -1,42 +1,50 @@
 #!/usr/bin/python3
 
-import sys
-import csv
+import argparse
+import sifthelper
 
 from nameutils import NameStruct
 
-year = sys.argv[1] # a year, in YYYY format
-input_gender = sys.argv[2].lower()
+parser = argparse.ArgumentParser(description="finds similar names")
+parser.add_argument("from_", metavar="YYYY", type=int,
+                    help="start year")
+parser.add_argument("to", metavar="YYYY", type=int,
+                    help="end year")
+parser.add_argument("gender", metavar="gender", type=str,
+                    help="m, f, or n", choices=["m", "f", "n"])
+parser.add_argument("name", metavar="name", type=str,
+                    help="input name")
+parser.add_argument("-n", metavar="num", type=int, default=100,
+                    help="how many results to display (default 100)")
+parser.add_argument("--different", action="store_true",
+                    help="invert the results to find most different names")
+
+args = parser.parse_args()
+
+yearfrom = args.from_
+if not yearfrom in range(1880, 2020):
+    print("invalid year:", yearfrom)
+    print("must be between 1880 and 2019 (inclusive)")
+    exit()
+yearto = args.to
+if not yearto in range(1880, 2020):
+    print("invalid year:", yearto)
+    print("must be between 1880 and 2019 (inclusive)")
+
+input_gender = args.gender
 if input_gender != "m" and input_gender != "f" and input_gender != "n":
     print("this tool only uses 'm', 'f', or 'n' for input gender.")
     print("'m' for masculint, 'f' for feminint, 'n' for gender neutral.")
     print("names between 40% and 60% masculine/feminine are considered gender neutral")
+    # print(f"input: {input_gender} t {type(input_gender)}")
     exit()
 
-input_name = sys.argv[3] # a name (or whatever, it doesn't actually matter lol)
-
-file = open("./namesdb/yob" + year + ".txt")
-csvreader = csv.reader(file, delimiter=',')
+input_name = args.name # a name (or whatever, it doesn't actually matter lol)
 
 names = {}
 
-for row in csvreader:
-    name = row[0].lower()
-    sex = row[1].lower()
-    occurrences = int(row[2])
-    if not name in names:
-        # initialie this one
-        names[name] = NameStruct(name)
-    if sex == 'm':
-        names[name].add_m(occurrences)
-    elif sex == 'f':
-        names[name].add_f(occurrences)
-    else:
-        print("unknown sex - " + name + ":" + sex + "!")
-        # I don't think this dataset has anything except
-        # M and F in it, but idk.
-
-file.close()
+for y in range(yearfrom, yearto+1):
+    sifthelper.read_to_dict(names, "./namesdb/yob" + str(y) + ".txt")
 
 siftlist = []
 
@@ -55,7 +63,7 @@ def similarity(name: NameStruct) -> float:
 
 # Change 100 here to how many you want
 # You can switch reverse to False if you want the least similar
-top_n = sorted(siftlist, key=similarity, reverse=False)[:100] 
+top_n = sorted(siftlist, key=similarity, reverse=args.different)[:args.n] 
 
 for name in top_n:
     gender_float = name.get_gender()
